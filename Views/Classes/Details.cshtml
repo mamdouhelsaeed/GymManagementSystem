@@ -1,0 +1,45 @@
+@model ClassDetailsViewModel
+@{
+    ViewData["Title"] = "Class Details";
+    var gymClass = Model.GymClass;
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h2 class="card-title">@gymClass.Name</h2>
+        <h6 class="card-subtitle mb-2 text-muted">Trainer: @gymClass.Trainer?.Name (@gymClass.Trainer?.Specialization)</h6>
+        <p class="card-text">@gymClass.Description</p>
+        <p class="card-text"><strong>Schedule:</strong> @gymClass.Schedule</p>
+    </div>
+</div>
+
+<h4>👥 Enrolled Members (@Model.EnrolledMembers.Count())</h4>
+
+@if (!Model.EnrolledMembers.Any())
+{
+    <div class="alert alert-info">No members are currently enrolled in this class.</div>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var member in Model.EnrolledMembers)
+            {
+                <tr>
+                    <td>@member.Name</td>
+                    <td>@member.Email</td>
+                    <td>@member.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-controller="Classes" asp-action="Index" class="btn btn-secondary">&laquo; Back to Classes</a>

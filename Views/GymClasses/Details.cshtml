@@ -1,0 +1,47 @@
+@model GymClass
+@{
+    ViewData["Title"] = "Class Details";
+}
+
+<h2>🗓 @Model.Name</h2>
+<dl class="row">
+    <dt class="col-sm-2">Trainer</dt>
+    <dd class="col-sm-10">@Model.Trainer?.Name (@Model.Trainer?.Specialization)</dd>
+    <dt class="col-sm-2">Description</dt>
+    <dd class="col-sm-10">@Model.Description</dd>
+    <dt class="col-sm-2">Schedule</dt>
+    <dd class="col-sm-10">@Model.Schedule</dd>
+</dl>
+
+<h4>Enrolled Members (@Model.Enrollments.Count)</h4>
+@if (!Model.Enrollments.Any())
+{
+    <div class="alert alert-info">No members enrolled yet.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Enrollment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Enrollments)
+            {
+                <tr>
+                    <td>@e.Member?.Name</td>
+                    <td>@e.Member?.Email</td>
+                    <td>@e.Member?.Phone</td>
+                    <td>@e.EnrollmentDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index" class="btn btn-secondary">&laquo; Back to List</a>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Edit</a>

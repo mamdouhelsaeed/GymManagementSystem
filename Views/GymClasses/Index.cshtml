@@ -1,0 +1,40 @@
+@model IEnumerable<GymClass>
+@{
+    ViewData["Title"] = "Manage Gym Classes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>🗓 Manage Gym Classes</h2>
+    <a asp-action="Create" class="btn btn-primary">+ New Class</a>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Schedule</th>
+            <th>Trainer</th>
+            <th style="width: 260px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var gymClass in Model)
+        {
+            <tr>
+                <td>@gymClass.Name</td>
+                <td>@gymClass.Description</td>
+                <td>@gymClass.Schedule</td>
+                <td>@gymClass.Trainer?.Name</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@gymClass.Id" class="btn btn-sm btn-outline-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@gymClass.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@gymClass.Id" method="post" class="d-inline js-delete-confirm" data-item-name="class '@gymClass.Name'">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

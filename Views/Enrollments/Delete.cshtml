@@ -1,0 +1,23 @@
+@model Enrollment
+@{
+    ViewData["Title"] = "Remove Enrollment";
+}
+
+<h2>🗑 Remove Enrollment</h2>
+
+<div class="alert alert-warning">Are you sure you want to remove this enrollment?</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Member</dt>
+    <dd class="col-sm-10">@Model.Member?.Name</dd>
+    <dt class="col-sm-2">Gym Class</dt>
+    <dd class="col-sm-10">@Model.GymClass?.Name</dd>
+    <dt class="col-sm-2">Enrollment Date</dt>
+    <dd class="col-sm-10">@Model.EnrollmentDate.ToShortDateString()</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="js-delete-confirm" data-item-name="this enrollment">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Remove</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

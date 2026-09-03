@@ -1,0 +1,43 @@
+@model EnrollMemberViewModel
+@{
+    ViewData["Title"] = "Enroll Member";
+}
+
+<h2>➕ Enroll Member in a Class</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="MemberId" class="form-label">Member</label>
+                <select asp-for="MemberId" asp-items="Model.Members" class="form-select">
+                    <option value="">-- Select Member --</option>
+                </select>
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="GymClassId" class="form-label">Gym Class</label>
+                <select asp-for="GymClassId" asp-items="Model.GymClasses" class="form-select">
+                    <option value="">-- Select Gym Class --</option>
+                </select>
+                <span asp-validation-for="GymClassId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EnrollmentDate" class="form-label"></label>
+                <input asp-for="EnrollmentDate" class="form-control" type="date" />
+                <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enroll</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

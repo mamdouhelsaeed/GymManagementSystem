@@ -1,0 +1,33 @@
+@model ClassesIndexViewModel
+@{
+    ViewData["Title"] = "Gym Classes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>🗓 Gym Classes</h2>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <label for="trainerFilter" class="form-label">Filter by Trainer</label>
+        <select id="trainerFilter" class="form-select">
+            <option value="">-- All Trainers --</option>
+            @foreach (var trainer in Model.Trainers)
+            {
+                if (Model.SelectedTrainerId == trainer.Id)
+                {
+                    <option value="@trainer.Id" selected="selected">@trainer.Name (@trainer.Specialization)</option>
+                }
+                else
+                {
+                    <option value="@trainer.Id">@trainer.Name (@trainer.Specialization)</option>
+                }
+            }
+        </select>
+        <div class="form-text">Selecting a trainer refreshes the list below via AJAX — no page reload.</div>
+    </div>
+</div>
+
+<div id="classesContainer">
+    <partial name="_ClassesPartial" model="Model.Classes" />
+</div>

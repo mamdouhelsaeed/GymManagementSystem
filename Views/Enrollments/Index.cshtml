@@ -1,0 +1,45 @@
+@model IEnumerable<Enrollment>
+@{
+    ViewData["Title"] = "Enrollments";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>📋 Enrollments</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Enroll Member</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No enrollments yet.</div>
+}
+else
+{
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Member</th>
+                <th>Gym Class</th>
+                <th>Trainer</th>
+                <th>Enrollment Date</th>
+                <th style="width: 120px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model)
+            {
+                <tr>
+                    <td>@e.Member?.Name</td>
+                    <td>@e.GymClass?.Name</td>
+                    <td>@e.GymClass?.Trainer?.Name</td>
+                    <td>@e.EnrollmentDate.ToShortDateString()</td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@e.Id" method="post" class="d-inline js-delete-confirm" data-item-name="this enrollment">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

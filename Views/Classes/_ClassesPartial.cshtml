@@ -1,0 +1,29 @@
+@model IEnumerable<GymClass>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No classes found for the selected trainer.</div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var gymClass in Model)
+        {
+            <div class="col-md-4">
+                <div class="card h-100 class-card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@gymClass.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Trainer: @gymClass.Trainer?.Name</h6>
+                        <p class="card-text">@gymClass.Description</p>
+                        <p class="card-text"><small class="text-muted">🕒 @gymClass.Schedule</small></p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a asp-controller="Classes" asp-action="Details" asp-route-id="@gymClass.Id" class="btn btn-outline-primary btn-sm w-100">
+                            View Details &amp; Members
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
